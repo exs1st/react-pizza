@@ -1,0 +1,31 @@
+.header{
+  padding: 50px 38px 40px 77px;
+  display: flex;
+  
+  &__logo{
+    display: flex;
+
+    &__caption{
+      &__title{
+        font-family: Proxima Nova;
+        font-style: normal;
+        font-weight: 800;
+        font-size: 24px;
+        letter-spacing: 0.01em;
+        text-transform: uppercase;
+        color: #181818;
+      }
+      &__text{
+        font-family: Proxima Nova;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        color: #7B7B7B;
+      }
+    }
+  }
+}
+
+.container{
+  width: 1340px;
+}
