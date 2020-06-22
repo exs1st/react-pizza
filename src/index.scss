@@ -9,6 +9,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: $body-bg;
+  display: flex;
+  justify-content: center;
+  padding: 45px;
 }
 
 *{

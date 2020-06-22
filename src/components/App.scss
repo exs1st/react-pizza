@@ -1,16 +1,42 @@
+.container{
+  display: flex;
+  flex-wrap: wrap;
+  width: 1340px;
+  background: #FFFFFF;
+  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.03);
+  border-radius: 10px;
+}
+
 .header{
   padding: 50px 38px 40px 77px;
   display: flex;
-  
+  justify-content: space-between;
+  border-bottom: 1px solid #F7F7F7;
+  width: 100%;
+
+
   &__logo{
     display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    &__image{
+      width: 38px;
+      height: 38px;
+      margin-right: 17px;
+    }
 
     &__caption{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-content: center;
       &__title{
         font-family: Proxima Nova;
         font-style: normal;
         font-weight: 800;
         font-size: 24px;
+        line-height: 29px;
         letter-spacing: 0.01em;
         text-transform: uppercase;
         color: #181818;
@@ -20,12 +46,44 @@
         font-style: normal;
         font-weight: normal;
         font-size: 16px;
+        line-height: 19px;
         color: #7B7B7B;
       }
     }
   }
-}
 
-.container{
-  width: 1340px;
+  &__cart{
+    cursor: pointer;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 150px;
+    height: 50px;
+    background: #FE5F1E;
+    border-radius: 30px;
+    font-family: Proxima Nova;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    color: #FFFFFF;
+
+    &__dash{
+      width: 1px;
+      height: 25px;
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    &__count{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &__icon{
+        width: 16px;
+        height: 16px;
+        margin-right: 8px;
+      }
+    }
+
+
+  }
 }
