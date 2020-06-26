@@ -1,4 +1,4 @@
-@import "../common/var";
+@import "./var";
 
 .container {
     display: flex;
@@ -87,7 +87,7 @@
     }
 }
 
-.content {
+.options {
     width: 100%;
     padding: $container-padding;
     display: flex;
@@ -170,7 +170,6 @@
         @include dark-bold-text;
         font-size: 32px;
         color: #000000;
-        margin-bottom: 35px;
     }
 
     &__list {
@@ -181,7 +180,7 @@
         justify-content: space-between;
         &__item {
             width: 280px;
-
+            margin-top: 60px;
             display: flex;
             flex-direction: column;
 
@@ -193,6 +192,9 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                & > img {
+                    width: 260px;
+                }
             }
 
             &__title {
