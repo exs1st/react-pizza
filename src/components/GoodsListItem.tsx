@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 interface IProps {
+    id: number;
     name: string;
     imageUrl: string;
     types: number[];
@@ -8,13 +9,19 @@ interface IProps {
     price: number;
     category: number;
     rating: number;
+    inCart: any;
+    addToCart: Function;
 }
 
 export default function GoodsListItem({
+    id,
     name,
     imageUrl,
     types,
     sizes,
+    inCart,
+    addToCart,
+    price,
 }: IProps) {
     const [dough] = useState([
         { id: 0, name: "Тонкое" },
@@ -82,8 +89,21 @@ export default function GoodsListItem({
                 </div>
             </div>
             <div className="goods__list__item__cart">
-                <div className="goods__list__item__cart__price">от 395 ₽</div>
-                <button className="goods__list__item__cart__add">
+                <div className="goods__list__item__cart__price">
+                    от {price} ₽
+                </div>
+                <button
+                    className="goods__list__item__cart__add"
+                    onClick={() =>
+                        addToCart(
+                            id,
+                            currentOptions.currentDough,
+                            currentOptions.currentSize,
+                            price,
+                            1
+                        )
+                    }
+                >
                     <svg
                         className="goods__list__item__cart__add__plus"
                         width="12"
@@ -95,9 +115,11 @@ export default function GoodsListItem({
                         <path d="M10.8 4.8H7.2V1.2C7.2 0.5373 6.6627 0 6 0C5.3373 0 4.8 0.5373 4.8 1.2V4.8H1.2C0.5373 4.8 0 5.3373 0 6C0 6.6627 0.5373 7.2 1.2 7.2H4.8V10.8C4.8 11.4627 5.3373 12 6 12C6.6627 12 7.2 11.4627 7.2 10.8V7.2H10.8C11.4627 7.2 12 6.6627 12 6C12 5.3373 11.4627 4.8 10.8 4.8Z" />
                     </svg>
                     Добавить
-                    <span className="goods__list__item__cart__add__count">
-                        2
-                    </span>
+                    {inCart && (
+                        <span className="goods__list__item__cart__add__count">
+                            {inCart.count}
+                        </span>
+                    )}
                 </button>
             </div>
         </div>

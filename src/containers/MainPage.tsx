@@ -1,28 +1,18 @@
 import React, { Component } from "react";
+import { inject, observer } from "mobx-react";
 
-import api from "api";
 import { Header, Options } from "./";
 import { GoodsList } from "components";
-import { IFilter, ISort } from "types";
+import { ISort } from "types";
 
 interface IState {
-    pizzas: any[];
-    filters: IFilter[];
     sorts: ISort[];
     sortIsOpen: boolean;
 }
-
-export default class MainPage extends Component {
+@inject("store")
+@observer
+export default class MainPage extends Component<{ store: any }> {
     state: IState = {
-        pizzas: [],
-        filters: [
-            { id: 1, name: "Все", active: true },
-            { id: 2, name: "Мясные", active: false },
-            { id: 3, name: "Вегетарианская", active: false },
-            { id: 4, name: "Гриль", active: false },
-            { id: 5, name: "Острые", active: false },
-            { id: 6, name: "Закрытые", active: false },
-        ],
         sorts: [
             { id: 1, name: "популярности", active: true },
             { id: 2, name: "цене", active: false },
@@ -31,30 +21,9 @@ export default class MainPage extends Component {
         sortIsOpen: false,
     };
 
-    async componentDidMount() {
-        const data = await api.getPizza();
-        this.setState({
-            pizzas: data,
-        });
+    componentDidMount() {
+        this.props.store.fetchPizza();
     }
-
-    changeFilter = (id: number) => {
-        const newFilters = this.state.filters.map((filter) => {
-            if (filter.active) {
-                return { ...filter, active: false };
-            } else if (filter.id === id) {
-                return { ...filter, active: true };
-            } else {
-                return filter;
-            }
-        });
-        this.setState((prevState) => {
-            return {
-                ...prevState,
-                filters: newFilters,
-            };
-        });
-    };
 
     changeSort = (id: number) => {
         const newSorts = this.state.sorts.map((sort) => {
@@ -75,21 +44,43 @@ export default class MainPage extends Component {
         });
     };
 
+    onFilterClick = (id: number) => {
+        this.props.store.changeActive(id);
+    };
+
     render() {
-        const { filters, sortIsOpen, sorts, pizzas } = this.state;
+        const { sortIsOpen, sorts } = this.state;
+        const {
+            categories,
+            allCount,
+            totalPrice,
+            pizzaCart,
+            addToCart,
+            getPizzaWithCategory,
+            activeCategory,
+        } = this.props.store;
+        const pizzas = getPizzaWithCategory(activeCategory);
         return (
             <div className="home">
                 <div className="container">
-                    <Header withCart={true} />
+                    <Header
+                        withCart={true}
+                        allCount={allCount}
+                        totalPrice={totalPrice}
+                    />
                     <Options
-                        filters={filters}
+                        filters={categories}
                         sorts={sorts}
-                        onFilterClick={this.changeFilter}
+                        onFilterClick={this.onFilterClick}
                         sortIsOpen={sortIsOpen}
                         sortOpen={this.sortOpen}
                         changeSort={this.changeSort}
                     />
-                    <GoodsList goods={pizzas} />
+                    <GoodsList
+                        goods={pizzas}
+                        pizzaCart={pizzaCart}
+                        addToCart={addToCart}
+                    />
                 </div>
             </div>
         );

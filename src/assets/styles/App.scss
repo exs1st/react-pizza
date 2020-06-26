@@ -112,6 +112,10 @@
                 color: #ffffff;
                 background: #282828;
             }
+
+            &:hover {
+                background: lighten(#282828, 80%);
+            }
         }
     }
 
@@ -135,7 +139,12 @@
             &__current {
                 color: $red-cl;
                 border-bottom: 1px dotted $red-cl;
+                border-radius: 5px 5px 0 0;
+                padding: 2px;
                 cursor: pointer;
+                &:hover {
+                    background: lighten(#282828, 82%);
+                }
             }
         }
 
@@ -163,6 +172,7 @@
 
 .goods {
     width: 100%;
+    height: 40vh;
     padding: $container-padding;
     padding-top: 0;
 
@@ -176,17 +186,14 @@
         width: 100%;
         display: flex;
         flex-wrap: wrap;
-        flex-direction: row;
+        flex: 0 1 280px;
         justify-content: space-between;
+
         &__item {
-            width: 280px;
             margin-top: 60px;
+            margin-left: 60px;
             display: flex;
             flex-direction: column;
-
-            &:not(:last-child) {
-                margin-right: 40px;
-            }
 
             &__image {
                 display: flex;
@@ -309,13 +316,17 @@
                     }
 
                     &__count {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
                         @include dark-bold-text;
                         background: $red-cl;
                         color: #ffffff;
-                        font-size: 13px;
-                        padding: 3px 7px;
+                        font-size: 14px;
                         border-radius: 50%;
                         margin-left: 14px;
+                        width: 20px;
+                        height: 20px;
                     }
                 }
             }

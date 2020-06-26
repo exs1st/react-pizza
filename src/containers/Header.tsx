@@ -5,9 +5,11 @@ import CartIcon from "assets/img/cart-icon.svg";
 
 interface IProps {
     withCart: boolean;
+    allCount: number;
+    totalPrice: number;
 }
 
-export default function Header({ withCart }: IProps) {
+export default function Header({ withCart, allCount, totalPrice }: IProps) {
     return (
         <div className=" header">
             <div className="header__logo">
@@ -27,7 +29,7 @@ export default function Header({ withCart }: IProps) {
             </div>
             {withCart && (
                 <div className="header__cart">
-                    <div className="header__cart__price">520 ₽</div>
+                    <div className="header__cart__price">{totalPrice} ₽</div>
                     <div className="header__cart__dash" />
                     <div className="header__cart__count">
                         <img
@@ -35,7 +37,7 @@ export default function Header({ withCart }: IProps) {
                             src={CartIcon}
                             alt="Cart icon"
                         />
-                        3
+                        {allCount}
                     </div>
                 </div>
             )}

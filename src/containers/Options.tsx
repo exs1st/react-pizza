@@ -1,17 +1,18 @@
 import React from "react";
+import { observer } from "mobx-react";
 
-import { IFilter, ISort } from "types";
+import { ISort } from "types";
 
 interface IProps {
-    filters: IFilter[];
+    filters: any[];
     sorts: ISort[];
-    onFilterClick: (id: number) => void;
+    onFilterClick: Function;
     sortIsOpen: boolean;
     sortOpen: () => void;
     changeSort: (id: number) => void;
 }
 
-export default function Options({
+function Options({
     filters,
     sorts,
     onFilterClick,
@@ -85,3 +86,5 @@ export default function Options({
         </div>
     );
 }
+
+export default observer(Options);

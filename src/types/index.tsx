@@ -1,4 +1,4 @@
-export type IFilter = {
+export type ICategory = {
     id: number;
     name: string;
     active: boolean;

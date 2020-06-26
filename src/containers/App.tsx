@@ -1,13 +1,16 @@
 import React from "react";
 import { BrowserRouter, Route } from "react-router-dom";
-
+import { Provider } from "mobx-react";
 import { MainPage } from "./";
+import Store from "store";
 
 function App() {
     return (
-        <BrowserRouter>
-            <Route path="/" component={MainPage} />
-        </BrowserRouter>
+        <Provider store={Store}>
+            <BrowserRouter>
+                <Route path="/" component={MainPage} />
+            </BrowserRouter>
+        </Provider>
     );
 }
 
