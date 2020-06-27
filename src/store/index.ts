@@ -8,6 +8,13 @@ const CategoriesModel = types.model("Categories", {
     name: types.string,
     active: types.boolean,
 });
+
+const SortsModel = types.model("Sorts", {
+    id: types.number,
+    name: types.string,
+    active: types.boolean,
+});
+
 const Store = types
     .model("Store", {
         pizzas: types.array(PizzaModel),
@@ -16,6 +23,10 @@ const Store = types
         totalPrice: types.number,
         categories: types.array(CategoriesModel),
         activeCategory: types.number,
+        sorts: types.array(SortsModel),
+        sortIsOpen: types.boolean,
+        activeSort: types.number,
+        sortTo: types.number,
     })
     .actions((self) => ({
         fetchPizza: flow(function* () {
@@ -59,11 +70,82 @@ const Store = types
             self.activeCategory = id;
             self.categories = newCategories;
         },
+        changeSort(id: number) {
+            const { sorts } = self;
+            const newSorts: any = sorts.map((sort: any) => {
+                if (sort.id === id) {
+                    return { ...sort, active: true };
+                } else if (sort.active) {
+                    return { ...sort, active: false };
+                } else {
+                    return sort;
+                }
+            });
+            self.sorts = newSorts;
+            self.sortIsOpen = false;
+            self.activeSort = id;
+        },
+        handleSortOpen() {
+            self.sortIsOpen = !self.sortIsOpen;
+        },
+        handleSortToClick() {
+            self.sortTo = self.sortTo === 0 ? 1 : 0;
+        },
     }))
     .views((self) => ({
-        getPizzaWithCategory(id: number) {
-            if (id === 0) return self.pizzas;
-            return self.pizzas.filter((pizza) => pizza.category === id);
+        getPizza() {
+            const { activeCategory, pizzas, activeSort, sortTo } = self;
+            let filteredPizza = [];
+            if (activeCategory === 0) {
+                filteredPizza = pizzas;
+            } else {
+                filteredPizza = pizzas.filter(
+                    (pizza) => pizza.category === activeCategory
+                );
+            }
+            let sortArr = [];
+
+            switch (activeSort) {
+                case 1: {
+                    sortArr = filteredPizza.sort((a, b): any =>
+                        sortTo === 0 ? a.rating - b.rating : b.rating - a.rating
+                    );
+                    break;
+                }
+                case 2: {
+                    sortArr = filteredPizza.sort((a, b): any =>
+                        sortTo === 0 ? a.price - b.price : b.price - a.price
+                    );
+                    break;
+                }
+
+                case 3: {
+                    sortArr = filteredPizza.sort((a, b): any => {
+                        if (sortTo === 0) {
+                            if (a.name < b.name) {
+                                return -1;
+                            }
+                            if (a.name > b.name) {
+                                return 1;
+                            }
+                        } else {
+                            if (a.name > b.name) {
+                                return -1;
+                            }
+                            if (a.name < b.name) {
+                                return 1;
+                            }
+                        }
+                        return 0;
+                    });
+                    break;
+                }
+                default: {
+                    return (sortArr = filteredPizza);
+                }
+            }
+
+            return sortArr;
         },
     }));
 
@@ -81,6 +163,14 @@ const store = Store.create({
         { id: 5, name: "Закрытые", active: false },
     ],
     activeCategory: 0,
+    sorts: [
+        { id: 1, name: "популярности", active: true },
+        { id: 2, name: "цене", active: false },
+        { id: 3, name: "алфавиту", active: false },
+    ],
+    activeSort: 1,
+    sortIsOpen: false,
+    sortTo: 0,
 });
 
 export default store;

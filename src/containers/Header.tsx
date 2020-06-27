@@ -1,15 +1,22 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import PizzaLogo from "assets/img/logo.svg";
 import CartIcon from "assets/img/cart-icon.svg";
 
 interface IProps {
     withCart: boolean;
-    allCount: number;
-    totalPrice: number;
+    allCount?: number;
+    totalPrice?: number;
 }
 
-export default function Header({ withCart, allCount, totalPrice }: IProps) {
+export default function Header({
+    withCart,
+    allCount,
+    totalPrice,
+    ...otherProps
+}: IProps) {
+    console.log(otherProps);
     return (
         <div className=" header">
             <div className="header__logo">
@@ -28,7 +35,7 @@ export default function Header({ withCart, allCount, totalPrice }: IProps) {
                 </div>
             </div>
             {withCart && (
-                <div className="header__cart">
+                <Link to="/cart" className="header__cart">
                     <div className="header__cart__price">{totalPrice} ₽</div>
                     <div className="header__cart__dash" />
                     <div className="header__cart__count">
@@ -39,7 +46,7 @@ export default function Header({ withCart, allCount, totalPrice }: IProps) {
                         />
                         {allCount}
                     </div>
-                </div>
+                </Link>
             )}
         </div>
     );
