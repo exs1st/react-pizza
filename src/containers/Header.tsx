@@ -16,7 +16,6 @@ export default function Header({
     totalPrice,
     ...otherProps
 }: IProps) {
-    console.log(otherProps);
     return (
         <div className=" header">
             <div className="header__logo">

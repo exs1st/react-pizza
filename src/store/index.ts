@@ -33,25 +33,33 @@ const Store = types
             const data = yield api.getPizza();
             self.pizzas = data;
         }),
-        addToCart(
-            pizzaId: number,
-            dough: number,
-            size: number,
-            price: number,
-            count: number
-        ) {
+        addToCart(pizzaId: number, dough: number, size: number, price: number) {
+            let cartId = self.pizzaCart.length + 1;
+            let sameOrder: any = self.pizzaCart.find((pizzaOrder) => {
+                if (
+                    pizzaOrder.pizzaId === pizzaId &&
+                    pizzaOrder.dough === dough &&
+                    pizzaOrder.size === size
+                )
+                    return pizzaOrder;
+                return undefined;
+            });
+
             self.allCount++;
             self.totalPrice += price;
-            const pizzaInCart = self.pizzaCart.find(
-                (pizza) => pizza.pizzaId === pizzaId
-            );
-            return self.pizzaCart.push({
-                id: self.pizzaCart.length + 1,
+
+            if (sameOrder) {
+                self.pizzaCart[sameOrder.storedValue.id - 1].count++;
+                return;
+            }
+
+            self.pizzaCart.push({
+                id: cartId,
                 pizzaId,
-                dough: [dough],
-                size: [size],
+                dough,
+                size,
                 price,
-                count: pizzaInCart ? pizzaInCart.count++ : 1,
+                count: 1,
             });
         },
         changeActive(id: number) {
@@ -107,20 +115,26 @@ const Store = types
 
             switch (activeSort) {
                 case 1: {
-                    sortArr = filteredPizza.sort((a, b): any =>
-                        sortTo === 0 ? a.rating - b.rating : b.rating - a.rating
-                    );
+                    sortArr = filteredPizza
+                        .slice()
+                        .sort((a, b): any =>
+                            sortTo === 0
+                                ? a.rating - b.rating
+                                : b.rating - a.rating
+                        );
                     break;
                 }
                 case 2: {
-                    sortArr = filteredPizza.sort((a, b): any =>
-                        sortTo === 0 ? a.price - b.price : b.price - a.price
-                    );
+                    sortArr = filteredPizza
+                        .slice()
+                        .sort((a, b): any =>
+                            sortTo === 0 ? a.price - b.price : b.price - a.price
+                        );
                     break;
                 }
 
                 case 3: {
-                    sortArr = filteredPizza.sort((a, b): any => {
+                    sortArr = filteredPizza.slice().sort((a, b): any => {
                         if (sortTo === 0) {
                             if (a.name < b.name) {
                                 return -1;

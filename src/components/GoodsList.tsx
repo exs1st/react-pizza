@@ -21,14 +21,17 @@ function GoodsList({ goods, pizzaCart, addToCart }: IProps) {
             <h2 className="goods__title">Все пиццы</h2>
             {goods ? (
                 <div className="goods__list">
-                    {goods.map(({ id, ...otherData }, index) => {
-                        const pizzaInCart = pizzaCart.find(
-                            (pizza) => id === pizza.pizzaId
-                        );
+                    {goods.map(({ id, ...otherData }) => {
+                        let countInCart = 0;
+                        pizzaCart.forEach((order) => {
+                            if (order.pizzaId === id) {
+                                countInCart += order.count;
+                            }
+                        });
                         return (
                             <GoodsListItem
                                 key={id}
-                                inCart={pizzaInCart}
+                                countInCart={countInCart}
                                 addToCart={addToCart}
                                 id={id}
                                 {...otherData}
