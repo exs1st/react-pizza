@@ -12,6 +12,11 @@ class PizzaService {
         const response = await this.instanse.get("/pizzas");
         return response.data;
     };
+
+    getOnePizza = async (id: number) => {
+        const response = await this.instanse.get(`/pizzas/${id}`);
+        return response.data;
+    };
 }
 
 export default new PizzaService();

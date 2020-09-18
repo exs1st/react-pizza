@@ -13,7 +13,7 @@ $container-padding: 40px 55px;
 
 //fonts
 @mixin dark-bold-text {
-    font-family: Proxima Nova;
+    font-family: "Proxima Nova";
     font-style: normal;
     font-weight: bold;
     font-size: 14px;
@@ -23,7 +23,7 @@ $container-padding: 40px 55px;
 }
 
 @mixin main-text {
-    font-family: Proxima Nova;
+    font-family: "Proxima Nova";
     font-style: normal;
     font-weight: normal;
     font-size: 14px;

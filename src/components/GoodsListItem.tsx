@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { observer } from "mobx-react";
 
+interface IDough {
+    id: number;
+    name: string;
+}
+
 interface IProps {
     id: number;
     name: string;
@@ -11,6 +16,7 @@ interface IProps {
     category: number;
     rating: number;
     countInCart: number;
+    dough: IDough[];
     addToCart: Function;
 }
 
@@ -23,11 +29,8 @@ function GoodsListItem({
     countInCart,
     addToCart,
     price,
+    dough,
 }: IProps) {
-    const [dough] = useState([
-        { id: 0, name: "Тонкое" },
-        { id: 1, name: "Традиционное" },
-    ]);
     const [currentOptions, setCurrentOptions] = useState({
         currentDough: types[0],
         currentSize: sizes[0],

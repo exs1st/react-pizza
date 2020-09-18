@@ -1,5 +1,7 @@
 @import "./var";
-@import "./CartPage.scss";
+@import "./CartPage";
+@import "./OrderList";
+@import "../fonts/proxima/stylesheet";
 
 .container {
     display: flex;
@@ -34,7 +36,7 @@
             justify-content: center;
             align-content: center;
             &__title {
-                font-family: Proxima Nova;
+                font-family: "Proxima Nova";
                 font-style: normal;
                 font-weight: 800;
                 font-size: 24px;
@@ -44,7 +46,7 @@
                 color: #181818;
             }
             &__text {
-                font-family: Proxima Nova;
+                font-family: "Proxima Nova";
                 font-style: normal;
                 font-weight: normal;
                 font-size: 16px;
@@ -63,7 +65,7 @@
         height: 50px;
         background: #fe5f1e;
         border-radius: 30px;
-        font-family: Proxima Nova;
+        font-family: "Proxima Nova";
         font-style: normal;
         font-weight: bold;
         font-size: 16px;

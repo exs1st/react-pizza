@@ -5,10 +5,10 @@ import { Header } from "./";
 
 import Empty from "assets/img/cart-empty.svg";
 import EmptySmile from "assets/img/empty-smile.svg";
+import { OrderListItem } from "components";
 
 const CartPage = ({ store }: any) => {
-    const { pizzaCart } = store;
-    console.info(pizzaCart);
+    const { pizzaCart, fetchOnePizza, getDough } = store;
     return (
         <div className="cart-page">
             <div className="container">
@@ -39,9 +39,12 @@ const CartPage = ({ store }: any) => {
                     <div className="cart-page__content">
                         {pizzaCart.map((pizzaOrder: any) => {
                             return (
-                                <div key={pizzaOrder.id}>
-                                    {pizzaOrder.pizzaId}
-                                </div>
+                                <OrderListItem
+                                    key={pizzaOrder.id}
+                                    fetchOnePizza={fetchOnePizza}
+                                    getDough={getDough}
+                                    {...pizzaOrder}
+                                />
                             );
                         })}
                     </div>

@@ -1,5 +1,8 @@
 .cart-page {
     & > .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         min-height: 85vh;
     }
     &__empty {
@@ -44,5 +47,12 @@
             color: #ffffff;
             padding: 15px 0;
         }
+    }
+
+    &__content {
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 830px;
+        width: 100%;
     }
 }

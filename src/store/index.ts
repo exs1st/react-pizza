@@ -15,6 +15,11 @@ const SortsModel = types.model("Sorts", {
     active: types.boolean,
 });
 
+const DoughModel = types.model("Dough", {
+    id: types.number,
+    name: types.string,
+});
+
 const Store = types
     .model("Store", {
         pizzas: types.array(PizzaModel),
@@ -27,29 +32,32 @@ const Store = types
         sortIsOpen: types.boolean,
         activeSort: types.number,
         sortTo: types.number,
+        dough: types.array(DoughModel),
     })
     .actions((self) => ({
         fetchPizza: flow(function* () {
             const data = yield api.getPizza();
             self.pizzas = data;
         }),
+        fetchOnePizza: flow(function* (id: number) {
+            const data = yield api.getOnePizza(id);
+            return data;
+        }),
         addToCart(pizzaId: number, dough: number, size: number, price: number) {
             let cartId = self.pizzaCart.length + 1;
-            let sameOrder: any = self.pizzaCart.find((pizzaOrder) => {
-                if (
+            let sameOrder: any = self.pizzaCart.find(
+                (pizzaOrder) =>
                     pizzaOrder.pizzaId === pizzaId &&
                     pizzaOrder.dough === dough &&
                     pizzaOrder.size === size
-                )
-                    return pizzaOrder;
-                return undefined;
-            });
+            );
 
             self.allCount++;
             self.totalPrice += price;
 
             if (sameOrder) {
-                self.pizzaCart[sameOrder.storedValue.id - 1].count++;
+                let sameOrderIndex = self.pizzaCart.indexOf(sameOrder);
+                self.pizzaCart[sameOrderIndex].count++;
                 return;
             }
 
@@ -158,14 +166,33 @@ const Store = types
                     return (sortArr = filteredPizza);
                 }
             }
-
             return sortArr;
+        },
+        getDough(id: number) {
+            return self.dough.find((dough) => dough.id === id);
         },
     }));
 
 const store = Store.create({
     pizzas: [],
-    pizzaCart: [],
+    pizzaCart: [
+        {
+            count: 8,
+            dough: 1,
+            id: 1,
+            pizzaId: 3,
+            price: 275,
+            size: 26,
+        },
+        {
+            count: 2,
+            dough: 1,
+            id: 2,
+            pizzaId: 2,
+            price: 275,
+            size: 30,
+        },
+    ],
     allCount: 0,
     totalPrice: 0,
     categories: [
@@ -185,6 +212,10 @@ const store = Store.create({
     activeSort: 1,
     sortIsOpen: false,
     sortTo: 0,
+    dough: [
+        { id: 0, name: "Тонкое" },
+        { id: 1, name: "Традиционное" },
+    ],
 });
 
 export default store;
