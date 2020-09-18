@@ -3,8 +3,9 @@ import { inject, observer } from "mobx-react";
 
 import { Header, Options } from "./";
 import { GoodsList } from "components";
+import { IStore } from "types";
 
-const MainPage = ({ store }: any) => {
+const MainPage = ({ store }: { store: IStore }) => {
     const {
         categories,
         allCount,
@@ -12,25 +13,24 @@ const MainPage = ({ store }: any) => {
         pizzaCart,
         addToCart,
         getPizza,
-        activeCategory,
         sortIsOpen,
         sorts,
         handleSortOpen,
         changeSort,
         sortTo,
         handleSortToClick,
+        getDough,
     } = store;
 
     useEffect(() => {
         store.fetchPizza();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [store]);
 
     let onFilterClick = (id: number) => {
         store.changeActive(id);
     };
 
-    const pizzas = getPizza(activeCategory);
+    const pizzas = getPizza();
     return (
         <div className="home">
             <div className="container">
@@ -49,6 +49,7 @@ const MainPage = ({ store }: any) => {
                     goods={pizzas}
                     pizzaCart={pizzaCart}
                     addToCart={addToCart}
+                    getDough={getDough}
                 />
             </div>
         </div>

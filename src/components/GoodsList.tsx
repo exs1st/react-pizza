@@ -2,25 +2,23 @@ import React from "react";
 import { observer } from "mobx-react";
 
 import { GoodsListItem } from "./";
+import { IPizza, IStore } from "types";
 
 interface IProps {
-    goods: any[];
-    pizzaCart: any[];
-    addToCart: (
-        pizzaId: number,
-        dough: number,
-        size: number,
-        price: number,
-        count: number
-    ) => void;
+    goods: IPizza[];
+    pizzaCart: IStore["pizzaCart"];
+    getDough: IStore["getDough"];
+    addToCart: IStore["addToCart"];
 }
 
-function GoodsList({ goods, pizzaCart, addToCart }: IProps) {
+function GoodsList({ goods, pizzaCart, addToCart, getDough }: IProps) {
+    const clearClass =
+        goods.length < 3 && goods.length % 6 !== 0 ? "after-clear" : "";
     return (
         <div className="goods">
             <h2 className="goods__title">Все пиццы</h2>
             {goods ? (
-                <div className="goods__list">
+                <div className={`goods__list ${clearClass}`}>
                     {goods.map(({ id, ...otherData }) => {
                         let countInCart = 0;
                         pizzaCart.forEach((order) => {
@@ -34,6 +32,7 @@ function GoodsList({ goods, pizzaCart, addToCart }: IProps) {
                                 countInCart={countInCart}
                                 addToCart={addToCart}
                                 id={id}
+                                getDough={getDough}
                                 {...otherData}
                             />
                         );

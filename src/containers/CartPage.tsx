@@ -6,13 +6,19 @@ import { Header } from "./";
 import Empty from "assets/img/cart-empty.svg";
 import EmptySmile from "assets/img/empty-smile.svg";
 import { OrderListItem } from "components";
+import { IStore } from "types";
 
-const CartPage = ({ store }: any) => {
-    const { pizzaCart, fetchOnePizza, getDough } = store;
+const CartPage = ({ store }: { store: IStore }) => {
+    const {
+        pizzaCart,
+        fetchOnePizza,
+        getDough,
+        changeCountPizzaInCart,
+    } = store;
     return (
         <div className="cart-page">
+            <Header withCart={false} />
             <div className="container">
-                <Header withCart={false} />
                 {pizzaCart.length === 0 ? (
                     <div className="cart-page__empty">
                         <h3 className="cart-page__empty__title">
@@ -37,13 +43,16 @@ const CartPage = ({ store }: any) => {
                     </div>
                 ) : (
                     <div className="cart-page__content">
-                        {pizzaCart.map((pizzaOrder: any) => {
+                        {pizzaCart.map((pizzaOrder) => {
                             return (
                                 <OrderListItem
                                     key={pizzaOrder.id}
                                     fetchOnePizza={fetchOnePizza}
                                     getDough={getDough}
-                                    {...pizzaOrder}
+                                    pizzaOrder={pizzaOrder}
+                                    changeCountPizzaInCart={
+                                        changeCountPizzaInCart
+                                    }
                                 />
                             );
                         })}

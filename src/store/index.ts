@@ -2,6 +2,7 @@ import { types, flow } from "mobx-state-tree";
 import CartModel from "./Cart";
 import PizzaModel from "./Pizza";
 import api from "api";
+import { IPizza } from "types";
 
 const CategoriesModel = types.model("Categories", {
     id: types.number,
@@ -20,7 +21,7 @@ const DoughModel = types.model("Dough", {
     name: types.string,
 });
 
-const Store = types
+export const Store = types
     .model("Store", {
         pizzas: types.array(PizzaModel),
         pizzaCart: types.array(CartModel),
@@ -45,7 +46,7 @@ const Store = types
         }),
         addToCart(pizzaId: number, dough: number, size: number, price: number) {
             let cartId = self.pizzaCart.length + 1;
-            let sameOrder: any = self.pizzaCart.find(
+            let sameOrder = self.pizzaCart.find(
                 (pizzaOrder) =>
                     pizzaOrder.pizzaId === pizzaId &&
                     pizzaOrder.dough === dough &&
@@ -71,35 +72,34 @@ const Store = types
             });
         },
         changeActive(id: number) {
-            const newCategories: any = self.categories.map((category) => {
-                if (category.active && category.id === id) {
-                    return category;
-                }
-                if (category.active) {
-                    return { ...category, active: false };
-                } else if (category.id === id) {
-                    return { ...category, active: true };
-                } else {
-                    return category;
-                }
-            });
-            self.activeCategory = id;
-            self.categories = newCategories;
+            let categoryWithActive = self.categories.find(
+                (category) => category.active === true
+            )!;
+            let categoryById = self.categories.find(
+                (category) => category.id === id
+            )!;
+            let indexCategoryWithActive = self.categories.indexOf(
+                categoryWithActive
+            );
+            let indexCategoryById = self.categories.indexOf(categoryById);
+            if (indexCategoryWithActive !== indexCategoryById) {
+                self.categories[indexCategoryWithActive].active = false;
+                self.categories[indexCategoryById].active = true;
+                self.activeCategory = id;
+            }
         },
         changeSort(id: number) {
             const { sorts } = self;
-            const newSorts: any = sorts.map((sort: any) => {
-                if (sort.id === id) {
-                    return { ...sort, active: true };
-                } else if (sort.active) {
-                    return { ...sort, active: false };
-                } else {
-                    return sort;
-                }
-            });
-            self.sorts = newSorts;
-            self.sortIsOpen = false;
-            self.activeSort = id;
+            let sortByActive = sorts.find((sort) => sort.active)!;
+            let sortById = sorts.find((sort) => sort.id === id)!;
+            let indexSortByActive = sorts.indexOf(sortByActive);
+            let indexSortById = sorts.indexOf(sortById);
+            if (indexSortById !== indexSortByActive) {
+                self.sorts[indexSortByActive].active = false;
+                self.sorts[indexSortById].active = true;
+                self.sortIsOpen = false;
+                self.activeSort = id;
+            }
         },
         handleSortOpen() {
             self.sortIsOpen = !self.sortIsOpen;
@@ -107,9 +107,22 @@ const Store = types
         handleSortToClick() {
             self.sortTo = self.sortTo === 0 ? 1 : 0;
         },
+        changeCountPizzaInCart(id: number, value: number) {
+            let order = self.pizzaCart.find((order) => order.id === id);
+
+            if (order) {
+                let orderIndex = self.pizzaCart.indexOf(order);
+                if (self.pizzaCart[orderIndex].count === 1 && value === -1) {
+                    self.pizzaCart.remove(order);
+                    return;
+                }
+                self.pizzaCart[orderIndex].count += value;
+                return;
+            }
+        },
     }))
     .views((self) => ({
-        getPizza() {
+        getPizza(): IPizza[] {
             const { activeCategory, pizzas, activeSort, sortTo } = self;
             let filteredPizza = [];
             if (activeCategory === 0) {
@@ -125,7 +138,7 @@ const Store = types
                 case 1: {
                     sortArr = filteredPizza
                         .slice()
-                        .sort((a, b): any =>
+                        .sort((a, b) =>
                             sortTo === 0
                                 ? a.rating - b.rating
                                 : b.rating - a.rating
@@ -135,14 +148,14 @@ const Store = types
                 case 2: {
                     sortArr = filteredPizza
                         .slice()
-                        .sort((a, b): any =>
+                        .sort((a, b) =>
                             sortTo === 0 ? a.price - b.price : b.price - a.price
                         );
                     break;
                 }
 
                 case 3: {
-                    sortArr = filteredPizza.slice().sort((a, b): any => {
+                    sortArr = filteredPizza.slice().sort((a, b) => {
                         if (sortTo === 0) {
                             if (a.name < b.name) {
                                 return -1;

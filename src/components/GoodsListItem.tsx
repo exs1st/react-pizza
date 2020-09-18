@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import { observer } from "mobx-react";
-
-interface IDough {
-    id: number;
-    name: string;
-}
+import { IStore } from "types";
 
 interface IProps {
     id: number;
@@ -16,7 +12,7 @@ interface IProps {
     category: number;
     rating: number;
     countInCart: number;
-    dough: IDough[];
+    getDough: IStore["getDough"];
     addToCart: Function;
 }
 
@@ -29,12 +25,13 @@ function GoodsListItem({
     countInCart,
     addToCart,
     price,
-    dough,
+    getDough,
 }: IProps) {
     const [currentOptions, setCurrentOptions] = useState({
         currentDough: types[0],
         currentSize: sizes[0],
     });
+    let dough = getDough(currentOptions.currentDough);
     return (
         <div className="goods__list__item">
             <div className="goods__list__item__image">
@@ -44,10 +41,8 @@ function GoodsListItem({
             <div className="goods__list__item__options">
                 <div className="goods__list__item__options__dough">
                     {types &&
+                        dough &&
                         types.map((type) => {
-                            const { name } = dough.find(
-                                (dough) => dough.id === type
-                            )!;
                             const classes =
                                 currentOptions.currentDough === type
                                     ? "active"
@@ -63,7 +58,7 @@ function GoodsListItem({
                                         })
                                     }
                                 >
-                                    {name}
+                                    {dough?.name}
                                 </button>
                             );
                         })}

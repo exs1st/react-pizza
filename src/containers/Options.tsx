@@ -1,10 +1,10 @@
 import React from "react";
 import { observer } from "mobx-react";
 
-import { ISort } from "types";
+import { ISort, IStore } from "types";
 
 interface IProps {
-    filters: any[];
+    filters: IStore["categories"];
     sorts: ISort[];
     onFilterClick: Function;
     handleSortToClick: Function;

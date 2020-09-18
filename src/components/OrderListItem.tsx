@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react";
+import { ICart, IStore } from "types";
 
 interface IPizzaData {
     category: number;
@@ -12,21 +13,36 @@ interface IPizzaData {
     types: number[];
 }
 
-function OrderListItem(props: any) {
+interface IProps {
+    fetchOnePizza: IStore["fetchOnePizza"];
+    getDough: IStore["getDough"];
+    pizzaOrder: ICart;
+    changeCountPizzaInCart: IStore["changeCountPizzaInCart"];
+}
+
+function OrderListItem(props: IProps) {
     const [pizzaData, setPizzaData] = useState<IPizzaData>();
     const [doughName, setDoughName] = useState("");
 
-    const { fetchOnePizza, getDough, ...otherProps } = props;
-    const { pizzaId, dough, size, count, price } = otherProps;
+    const {
+        fetchOnePizza,
+        getDough,
+        pizzaOrder,
+        changeCountPizzaInCart,
+    } = props;
+    const { pizzaId, dough, size, count, price, id } = pizzaOrder;
 
     useEffect(() => {
-        let currentDough = getDough(dough);
+        let currentDough = getDough(dough)!;
         setDoughName(currentDough.name);
-        fetchOnePizza(pizzaId).then((pizza: any) => {
+        fetchOnePizza(pizzaId).then((pizza: IPizzaData) => {
             setPizzaData(pizza);
         });
     }, [dough, fetchOnePizza, getDough, pizzaId]);
-    console.log(otherProps);
+
+    let changeCountPizza = (value: number) => {
+        changeCountPizzaInCart(id, value);
+    };
 
     if (pizzaData) {
         const { imageUrl, name } = pizzaData;
@@ -49,16 +65,22 @@ function OrderListItem(props: any) {
                     </div>
                     <div className="order__content__right">
                         <div className="order__content__counter">
-                            <div className="order__content__counter__minus">
+                            <button
+                                className="order__content__counter__minus"
+                                onClick={() => changeCountPizza(-1)}
+                            >
                                 <span></span>
-                            </div>
+                            </button>
                             <div className="order__content__counter__count">
                                 {count}
                             </div>
-                            <div className="order__content__counter__plus">
+                            <button
+                                className="order__content__counter__plus"
+                                onClick={() => changeCountPizza(1)}
+                            >
                                 <span></span>
                                 <span></span>
-                            </div>
+                            </button>
                         </div>
                         <div className="order__content__price">
                             <span>{price * count}</span> ₽

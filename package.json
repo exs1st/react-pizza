@@ -23,10 +23,10 @@
         "typescript": "~3.7.2"
     },
     "scripts": {
-        "dev": "cross-env NODE_PATH=src react-scripts start",
-        "build": "cross-env NODE_PATH=src react-scripts build",
-        "test": "cross-env NODE_PATH=src react-scripts test",
-        "eject": "cross-env NODE_PATH=src react-scripts eject",
+        "dev": "cross-env react-scripts start",
+        "build": "cross-env react-scripts build",
+        "test": "cross-env react-scripts test",
+        "eject": "cross-env react-scripts eject",
         "api": "json-server --watch ./src/api/db.json --port=4000"
     },
     "eslintConfig": {
