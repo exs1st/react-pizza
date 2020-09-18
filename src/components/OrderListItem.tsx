@@ -18,6 +18,7 @@ interface IProps {
     getDough: IStore["getDough"];
     pizzaOrder: ICart;
     changeCountPizzaInCart: IStore["changeCountPizzaInCart"];
+    deleteOrderFromCart: IStore["deleteOrderFromCart"];
 }
 
 function OrderListItem(props: IProps) {
@@ -29,6 +30,7 @@ function OrderListItem(props: IProps) {
         getDough,
         pizzaOrder,
         changeCountPizzaInCart,
+        deleteOrderFromCart,
     } = props;
     const { pizzaId, dough, size, count, price, id } = pizzaOrder;
 
@@ -85,10 +87,13 @@ function OrderListItem(props: IProps) {
                         <div className="order__content__price">
                             <span>{price * count}</span> ₽
                         </div>
-                        <div className="order__content__delete-btn">
+                        <button
+                            className="order__content__delete-btn"
+                            onClick={() => deleteOrderFromCart(id)}
+                        >
                             <span></span>
                             <span></span>
-                        </div>
+                        </button>
                     </div>
                 </div>
             </div>

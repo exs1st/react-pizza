@@ -120,6 +120,14 @@ export const Store = types
                 return;
             }
         },
+        deleteOrderFromCart(id: number) {
+            let orderForDelete = self.pizzaCart.find(
+                (order) => order.id === id
+            );
+            if (orderForDelete) {
+                self.pizzaCart.remove(orderForDelete);
+            }
+        },
     }))
     .views((self) => ({
         getPizza(): IPizza[] {

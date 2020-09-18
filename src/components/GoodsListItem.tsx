@@ -31,7 +31,7 @@ function GoodsListItem({
         currentDough: types[0],
         currentSize: sizes[0],
     });
-    let dough = getDough(currentOptions.currentDough);
+
     return (
         <div className="goods__list__item">
             <div className="goods__list__item__image">
@@ -41,8 +41,8 @@ function GoodsListItem({
             <div className="goods__list__item__options">
                 <div className="goods__list__item__options__dough">
                     {types &&
-                        dough &&
                         types.map((type) => {
+                            let dough = getDough(type);
                             const classes =
                                 currentOptions.currentDough === type
                                     ? "active"

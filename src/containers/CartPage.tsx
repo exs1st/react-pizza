@@ -14,6 +14,7 @@ const CartPage = ({ store }: { store: IStore }) => {
         fetchOnePizza,
         getDough,
         changeCountPizzaInCart,
+        deleteOrderFromCart,
     } = store;
     return (
         <div className="cart-page">
@@ -53,6 +54,7 @@ const CartPage = ({ store }: { store: IStore }) => {
                                     changeCountPizzaInCart={
                                         changeCountPizzaInCart
                                     }
+                                    deleteOrderFromCart={deleteOrderFromCart}
                                 />
                             );
                         })}
