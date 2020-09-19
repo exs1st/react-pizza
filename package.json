@@ -26,6 +26,7 @@
         "dev": "cross-env react-scripts start",
         "build": "cross-env react-scripts build",
         "test": "cross-env react-scripts test",
+        "test:watch": "yarn test --watchAll",
         "eject": "cross-env react-scripts eject",
         "api": "json-server --watch ./src/api/db.json --port=4000"
     },
@@ -50,8 +51,13 @@
     },
     "devDependencies": {
         "@types/axios": "^0.14.0",
+        "@types/enzyme": "^3.10.6",
+        "@types/enzyme-adapter-react-16": "^1.0.6",
         "@types/react-router-dom": "^5.1.5",
         "cross-env": "^7.0.2",
-        "json-server": "^0.16.1"
+        "enzyme": "^3.11.0",
+        "enzyme-adapter-react-16": "^1.15.4",
+        "json-server": "^0.16.1",
+        "react-test-renderer": "^16.13.1"
     }
 }
