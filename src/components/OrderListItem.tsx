@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react";
 import { ICart, IStore } from "types";
 
+import MinusIcon from "assets/img/minus-icon.svg";
+import PlusIcon from "assets/img/plus-icon.svg";
+import CloseIcon from "assets/img/close-icon.svg";
+
 interface IPizzaData {
     category: number;
     id: number;
@@ -71,7 +75,7 @@ function OrderListItem(props: IProps) {
                                 className="order__content__counter__minus"
                                 onClick={() => changeCountPizza(-1)}
                             >
-                                <span></span>
+                                <img src={MinusIcon} alt="Minus icon" />
                             </button>
                             <div className="order__content__counter__count">
                                 {count}
@@ -80,8 +84,7 @@ function OrderListItem(props: IProps) {
                                 className="order__content__counter__plus"
                                 onClick={() => changeCountPizza(1)}
                             >
-                                <span></span>
-                                <span></span>
+                                <img src={PlusIcon} alt="Plus icon" />
                             </button>
                         </div>
                         <div className="order__content__price">
@@ -91,8 +94,7 @@ function OrderListItem(props: IProps) {
                             className="order__content__delete-btn"
                             onClick={() => deleteOrderFromCart(id)}
                         >
-                            <span></span>
-                            <span></span>
+                            <img src={CloseIcon} alt="Close icon" />
                         </button>
                     </div>
                 </div>

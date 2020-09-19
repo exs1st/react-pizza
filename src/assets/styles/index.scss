@@ -1,6 +1,6 @@
-@import "assets/fonts/proxima/stylesheet";
-@import "./assets/styles/var";
-@import "./assets/styles/App";
+@import "../fonts/proxima/stylesheet";
+@import "./var";
+@import "./App";
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
@@ -11,7 +11,11 @@ body {
     background: $body-bg;
     display: flex;
     justify-content: center;
-    padding: 45px;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 * {
@@ -27,10 +31,21 @@ select {
     cursor: pointer;
 }
 
-.disabled {
+a {
+    text-decoration: none;
+}
+
+img {
     user-select: none;
 }
 
-a {
-    text-decoration: none;
+.after-clear {
+    &:after {
+        content: "";
+        flex: 999;
+    }
+}
+
+.disabled {
+    user-select: none;
 }

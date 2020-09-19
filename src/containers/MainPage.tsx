@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { inject, observer } from "mobx-react";
 
-import { Header, Options } from "./";
-import { GoodsList } from "components";
+import { Options } from "./";
+import { Header, GoodsList } from "components";
 import { IStore } from "types";
 
 const MainPage = ({ store }: { store: IStore }) => {
@@ -32,26 +32,29 @@ const MainPage = ({ store }: { store: IStore }) => {
 
     const pizzas = getPizza();
     return (
-        <div className="home">
-            <div className="container">
-                <Header withCart allCount={allCount} totalPrice={totalPrice} />
-                <Options
-                    filters={categories}
-                    sorts={sorts}
-                    onFilterClick={onFilterClick}
-                    sortIsOpen={sortIsOpen}
-                    sortOpen={handleSortOpen}
-                    changeSort={changeSort}
-                    sortTo={sortTo}
-                    handleSortToClick={handleSortToClick}
-                />
-                <GoodsList
-                    goods={pizzas}
-                    pizzaCart={pizzaCart}
-                    addToCart={addToCart}
-                    getDough={getDough}
-                />
-            </div>
+        <div className="main-page">
+            <Header
+                withCart
+                allCount={allCount}
+                totalPrice={totalPrice}
+                headerText="самая вкусная пицца во вселенной"
+            />
+            <Options
+                filters={categories}
+                sorts={sorts}
+                onFilterClick={onFilterClick}
+                sortIsOpen={sortIsOpen}
+                sortOpen={handleSortOpen}
+                changeSort={changeSort}
+                sortTo={sortTo}
+                handleSortToClick={handleSortToClick}
+            />
+            <GoodsList
+                goods={pizzas}
+                pizzaCart={pizzaCart}
+                addToCart={addToCart}
+                getDough={getDough}
+            />
         </div>
     );
 };

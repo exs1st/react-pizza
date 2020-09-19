@@ -39,7 +39,6 @@
             flex-direction: column;
 
             &__name {
-                font-family: "Proxima Nova";
                 font-weight: bold;
                 font-size: 22px;
                 line-height: 27px;
@@ -47,7 +46,6 @@
                 color: #000000;
             }
             &__options {
-                font-family: "Proxima Nova";
                 font-weight: 400;
                 font-size: 18px;
                 line-height: 22px;
@@ -73,29 +71,9 @@
                 background: none;
             }
 
-            &__minus {
-                & > span {
-                    width: 9.6px;
-                    height: 1.92px;
-
-                    background: $red-cl;
-                }
-            }
-
-            &__plus {
-                & > span {
-                    width: 9.6px;
-                    height: 1.92px;
-                    background: $red-cl;
-                    &:last-child {
-                        position: absolute;
-                        transform: rotate(90deg);
-                    }
-                }
-            }
             &__count {
                 margin: 0 12px;
-                font-family: "Proxima Nova";
+
                 font-weight: bold;
                 font-size: 22px;
                 line-height: 27px;
@@ -105,14 +83,10 @@
             }
         }
         &__price {
-            font-family: "Proxima Nova";
             color: #000000;
             font-size: 22px;
             line-height: 27px;
             letter-spacing: 0.01em;
-            & > span {
-                font-weight: bold;
-            }
         }
 
         &__delete-btn {
@@ -125,17 +99,6 @@
             align-items: center;
             border-radius: 50%;
             background: none;
-
-            & > span {
-                width: 9.6px;
-                height: 1.92px;
-                background: #d7d7d7;
-                transform: rotate(-45deg);
-                &:last-child {
-                    position: absolute;
-                    transform: rotate(45deg);
-                }
-            }
         }
     }
 }

@@ -21,6 +21,13 @@ const DoughModel = types.model("Dough", {
     name: types.string,
 });
 
+function UpdateLocalStorage(self: any) {
+    let cartJson = JSON.stringify(self.pizzaCart);
+    localStorage.setItem("cart", cartJson);
+    localStorage.setItem("allCount", self.allCount.toString());
+    localStorage.setItem("totalPrice", self.totalPrice.toString());
+}
+
 export const Store = types
     .model("Store", {
         pizzas: types.array(PizzaModel),
@@ -59,17 +66,17 @@ export const Store = types
             if (sameOrder) {
                 let sameOrderIndex = self.pizzaCart.indexOf(sameOrder);
                 self.pizzaCart[sameOrderIndex].count++;
-                return;
+            } else {
+                self.pizzaCart.push({
+                    id: cartId,
+                    pizzaId,
+                    dough,
+                    size,
+                    price,
+                    count: 1,
+                });
             }
-
-            self.pizzaCart.push({
-                id: cartId,
-                pizzaId,
-                dough,
-                size,
-                price,
-                count: 1,
-            });
+            UpdateLocalStorage(self);
         },
         changeActive(id: number) {
             let categoryWithActive = self.categories.find(
@@ -116,9 +123,17 @@ export const Store = types
                     self.pizzaCart.remove(order);
                     return;
                 }
+                if (value === -1) {
+                    self.totalPrice -= order.price;
+                    self.allCount--;
+                } else {
+                    self.totalPrice += order.price;
+                    self.allCount++;
+                }
                 self.pizzaCart[orderIndex].count += value;
-                return;
             }
+
+            UpdateLocalStorage(self);
         },
         deleteOrderFromCart(id: number) {
             let orderForDelete = self.pizzaCart.find(
@@ -126,7 +141,16 @@ export const Store = types
             );
             if (orderForDelete) {
                 self.pizzaCart.remove(orderForDelete);
+                self.allCount -= orderForDelete.count;
+                self.totalPrice -= orderForDelete.price * orderForDelete.count;
             }
+            UpdateLocalStorage(self);
+        },
+        clearCart() {
+            self.pizzaCart.clear();
+            self.totalPrice = 0;
+            self.allCount = 0;
+            UpdateLocalStorage(self);
         },
     }))
     .views((self) => ({
@@ -194,28 +218,24 @@ export const Store = types
         },
     }));
 
+const initStoreCartValue =
+    localStorage.getItem("cart") !== null
+        ? JSON.parse(localStorage.getItem("cart")!)
+        : [];
+const initStoreTotalPrice =
+    localStorage.getItem("totalPrice") !== null
+        ? Number(localStorage.getItem("totalPrice"))!
+        : 0;
+const initStoreAllCountValue =
+    localStorage.getItem("allCount") !== null
+        ? Number(localStorage.getItem("allCount"))!
+        : 0;
+
 const store = Store.create({
     pizzas: [],
-    pizzaCart: [
-        {
-            count: 8,
-            dough: 1,
-            id: 1,
-            pizzaId: 3,
-            price: 275,
-            size: 26,
-        },
-        {
-            count: 2,
-            dough: 1,
-            id: 2,
-            pizzaId: 2,
-            price: 275,
-            size: 30,
-        },
-    ],
-    allCount: 0,
-    totalPrice: 0,
+    pizzaCart: initStoreCartValue,
+    allCount: initStoreAllCountValue,
+    totalPrice: initStoreTotalPrice,
     categories: [
         { id: 0, name: "Все", active: true },
         { id: 1, name: "Мясные", active: false },

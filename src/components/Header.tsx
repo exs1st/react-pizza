@@ -8,16 +8,17 @@ interface IProps {
     withCart: boolean;
     allCount?: number;
     totalPrice?: number;
+    headerText: string;
 }
 
 export default function Header({
     withCart,
     allCount,
     totalPrice,
-    ...otherProps
+    headerText,
 }: IProps) {
     return (
-        <div className=" header">
+        <div className="header">
             <div className="header__logo">
                 <img
                     className="header__logo__image"
@@ -29,7 +30,7 @@ export default function Header({
                         REACT PIZZA
                     </div>
                     <div className="header__logo__caption__text">
-                        самая вкусная пицца во вселенной
+                        {headerText}
                     </div>
                 </div>
             </div>

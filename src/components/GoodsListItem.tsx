@@ -98,8 +98,7 @@ function GoodsListItem({
                             id,
                             currentOptions.currentDough,
                             currentOptions.currentSize,
-                            price,
-                            1
+                            price
                         )
                     }
                 >
