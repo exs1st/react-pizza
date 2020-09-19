@@ -58,7 +58,7 @@ function OrderListItem(props: IProps) {
                 <div className="order__content">
                     <div className="order__content__left">
                         <div className="order__content__img">
-                            <img src={imageUrl} alt={name} />
+                            <img src={imageUrl} alt={name} loading="lazy" />
                         </div>
                         <div className="order__content__text">
                             <div className="order__content__text__name">

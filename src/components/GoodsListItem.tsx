@@ -35,7 +35,7 @@ function GoodsListItem({
     return (
         <div className="goods__list__item">
             <div className="goods__list__item__image">
-                <img src={imageUrl} alt="CheeseBurgerPizza" />
+                <img src={imageUrl} alt="CheeseBurgerPizza" loading="lazy" />
             </div>
             <div className="goods__list__item__title">{name}</div>
             <div className="goods__list__item__options">
