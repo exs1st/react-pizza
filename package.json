@@ -23,11 +23,11 @@
         "typescript": "~3.7.2"
     },
     "scripts": {
-        "dev": "cross-env react-scripts start",
-        "build": "cross-env react-scripts build",
-        "test": "cross-env react-scripts test",
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
         "test:watch": "yarn test --watchAll",
-        "eject": "cross-env react-scripts eject",
+        "eject": "react-scripts eject",
         "api": "json-server --watch ./src/api/db.json --port=4000"
     },
     "eslintConfig": {

@@ -14,7 +14,7 @@
         flex-wrap: wrap;
         flex: 0 1 280px;
         justify-content: space-between;
-        margin-bottom: 10px;
+        padding-bottom: 20px;
 
         &__item {
             margin-top: 60px;
@@ -31,6 +31,7 @@
                 align-items: center;
                 & > img {
                     width: 260px;
+                    height: 260px;
                 }
             }
 

@@ -1,7 +1,6 @@
 import { Instance } from "mobx-state-tree";
 import { Store } from "store";
-import CartModel from "store/Cart";
-import PizzaModel from "store/Pizza";
+import { CartModel, DoughModel, PizzaModel } from "store/models";
 
 export type ICategory = {
     id: number;
@@ -18,3 +17,4 @@ export type ISort = {
 export interface IStore extends Instance<typeof Store> {}
 export interface ICart extends Instance<typeof CartModel> {}
 export interface IPizza extends Instance<typeof PizzaModel> {}
+export interface IDough extends Instance<typeof DoughModel> {}
