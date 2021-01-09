@@ -11,6 +11,7 @@
         "@types/react": "^16.9.0",
         "@types/react-dom": "^16.9.0",
         "axios": "^0.21.1",
+        "concurrently": "^5.3.0",
         "history": "^5.0.0",
         "mobx": "4.15.4",
         "mobx-react": "^6.2.2",
@@ -28,7 +29,8 @@
         "test": "react-scripts test",
         "test:watch": "yarn test --watchAll",
         "eject": "react-scripts eject",
-        "api": "json-server --watch ./src/api/db.json --port=4000"
+        "api": "json-server --watch ./src/api/db.json --port=4000",
+        "deploy": "concurrently \"yarn api\" \"serve build -l 8080\""
     },
     "eslintConfig": {
         "extends": "react-app"
