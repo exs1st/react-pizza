@@ -4,7 +4,10 @@ class PizzaService {
     url: string;
     instanse: AxiosInstance;
     constructor() {
-        this.url = "http://localhost:4000";
+        this.url =
+            process.env.NODE_ENV !== "production"
+                ? "http://localhost:4000"
+                : "/db";
         this.instanse = axios.create({ baseURL: this.url });
     }
 
