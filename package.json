@@ -31,7 +31,7 @@
         "eject": "react-scripts eject",
         "api": "json-server --watch ./src/api/db.json --port=4000",
         "heroku-prebuild": "concurrently \"npm i -g json-server\" \"npm i -g serve\"",
-        "deploy": "concurrently \"yarn api\" \"serve build -l 8080\""
+        "deploy": "npm i -g concurrently && concurrently \"yarn api\" \"serve build -l 8080\""
     },
     "eslintConfig": {
         "extends": "react-app"
