@@ -101,7 +101,7 @@ function OrderListItem(props: IProps) {
             </div>
         );
     }
-    return <div>Loading ...</div>;
+    return <div className="order">Loading ...</div>;
 }
 
 export default observer(OrderListItem);
